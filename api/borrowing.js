@@ -29,6 +29,9 @@ exports.returnBook = async(req, res, next) => {
 }
 
 exports.borrowHistory = async(req, res, next) => {
-    const history = await Borrowing.find({user_id: req.user._id});
+    const history = await Borrowing.find({user_id: req.user._id}).populate({
+        path: 'book',
+        select: '-_id -n_borrows -available -__v'
+    }).select('-__v -user_id');
     res.status(200).json(history);
 }

@@ -1,7 +1,7 @@
 const Book = require("../models/books.js");
 
 exports.getAll = async (req, res, next) => {
-    const books = await Book.find({ available: true });
+    const books = await Book.find({ available: true }).select('-__v -n_borrows -available');
     if (!books) {
         res.status(400).json({ status: "no available books" });
         return;
@@ -19,7 +19,12 @@ exports.addBook = async (req, res, next) => {
         title: req.body.title,
         author_name: req.body.author_name
     });
-    await book.save();
+    try {
+        await book.save();
+    } catch (error) {
+        res.status(400).json({ status: "failed to add book" });
+        return;
+    }
     res.status(200).json({ status: "book added successfully" });
 }
 

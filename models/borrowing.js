@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const BorrowingSchema = new mongoose.Schema(
     {
-        book_id: {
+        book: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Book',
             required: true
