@@ -28,6 +28,10 @@ mongoose.connection.on("disconnected", () => {
 
 app.use(express.json({ limit: "10kb" }));
 
+app.get('/', (req, res) => {
+    res.status(200).json('Welcome, your app is working well');
+  });
+
 app.post('/api/register', register);
 app.post('/api/login', login);
 
