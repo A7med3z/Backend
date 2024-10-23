@@ -1,5 +1,5 @@
 var express = require('express');
-const dotenv = require("dotenv");
+// const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const { register, login, protect } = require('./api/users.js');
 const { getAll, addBook, updateBook, deleteBook } = require('./api/books.js');
@@ -10,11 +10,14 @@ const PORT = 8800;
 
 var app = express();
 
-dotenv.config();
+// dotenv.config();
+
+const mongo = "mongodb+srv://a7med3zkaka:ZY.AaDs%23nng3eQz@library.kfism.mongodb.net/?retryWrites=true&w=majority&appName=library"
+
 
 const connect = async () => {
     try {
-        await mongoose.connect(process.env.MONGO);
+        await mongoose.connect(mongo);
         console.log("Connected to mongoDB.");
     } catch (error) {
         throw error;
