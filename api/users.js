@@ -20,7 +20,7 @@ exports.login = async (req, res, next) => {
         res.status(400).json({ status: "wrong email or passwoed" });
         return;
     }
-    const token = jwt.sign({ id: user._id.toString() }, '8hEnPGeoBqGUT6zksxt4G95gW+uMdzwe7EVaRnp0xRI=');
+    const token = jwt.sign({ id: user._id.toString() }, process.env.JWT_SECRET);
     res.cookie("token", token);
     res.status(200).json({
         name: user.name,
@@ -35,7 +35,7 @@ exports.protect = async (req, res, next) => {
         return
     }
     const token = req.headers.authorization;
-    const decoded = jwt.verify(token, '8hEnPGeoBqGUT6zksxt4G95gW+uMdzwe7EVaRnp0xRI=');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (Date.now() / 1000 - decoded.iat > 60 * 60 * 24) {
         res.status(400).json({ status: "session expired, please log in again" });
         return;

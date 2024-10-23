@@ -1,23 +1,20 @@
 var express = require('express');
-// const dotenv = require("dotenv");
+const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const { register, login, protect } = require('./api/users.js');
 const { getAll, addBook, updateBook, deleteBook } = require('./api/books.js');
 const { borrowBook, returnBook, borrowHistory } = require('./api/borrowing.js');
 const { borrowedBooks, popularBooks } = require('./api/reports.js');
 
-const PORT = 8800;
+const PORT = process.env.PORT || 8800;
 
-var app = express();
+const app = express();
 
-// dotenv.config();
-
-const mongo = "mongodb+srv://a7med3zkaka:ZY.AaDs%23nng3eQz@library.kfism.mongodb.net/?retryWrites=true&w=majority&appName=library"
-
+dotenv.config();
 
 const connect = async () => {
     try {
-        await mongoose.connect(mongo);
+        await mongoose.connect(process.env.MONGO);
         console.log("Connected to mongoDB.");
     } catch (error) {
         throw error;
@@ -29,10 +26,6 @@ mongoose.connection.on("disconnected", () => {
 });
 
 app.use(express.json({ limit: "10kb" }));
-
-app.get('/', (req, res) => {
-    res.status(200).json('Welcome, your app is working well');
-  });
 
 app.post('/api/register', register);
 app.post('/api/login', login);
@@ -53,5 +46,3 @@ app.listen(PORT, () => {
     connect();
     console.log("Connected to backend.");
 });
-
-module.exports = app;
