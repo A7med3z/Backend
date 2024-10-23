@@ -6,7 +6,7 @@ const { getAll, addBook, updateBook, deleteBook } = require('./api/books.js');
 const { borrowBook, returnBook, borrowHistory } = require('./api/borrowing.js');
 const { borrowedBooks, popularBooks } = require('./api/reports.js');
 
-const PORT = process.env.PORT || 8800;
+const PORT = 8800;
 
 var app = express();
 
